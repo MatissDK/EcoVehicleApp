@@ -7,7 +7,7 @@ namespace Vidly.Models
 {
     public class Vehicle
     {
-        public int objectId { get; set; }
+
         public string address { get; set; }
         public double latitude { get; set; }
         public double longitude { get; set; }

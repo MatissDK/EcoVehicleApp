@@ -19,11 +19,10 @@
     <script>
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 8,
-                center: { lat: 58.5953, lng: 25.0136 },
+                zoom: 11,
+                center: { lat: 58.3776, lng: 26.7290 },
                 mapTypeId: 'terrain'
             });
-
 
             function getJsonData() {
                 $.ajax({
@@ -32,14 +31,13 @@
                     dataType: 'json',
                     success: function(myControllerJsonData) {
                         handleData(myControllerJsonData);
-                       // debugger;
+                        // debugger;
 
                     }
                 });
             }
 
             getJsonData();
-
 
             function handleData(data) {
 
@@ -48,11 +46,14 @@
                 var vehicle_969 = [];
 
                 $.each(data, function(i, item) {
-                    if (item.objectName === 'https://apps.oskando.ee/seeme/Api/Vehicles/getRawData?objectId=1041&begTimestamp=2013-02-01&endTimestamp=2013-02-02&key=proovitoo1') {
+                    if (item.objectName === 'https://apps.oskando.ee/seeme/Api/Vehicles/' +
+                        'getRawData?objectId=1041&begTimestamp=2013-02-01&endTimestamp=2013-02-02&key=proovitoo1') {
                         vehicle_1041.push({ lat: item.latitude, lng: item.longitude });
-                    } else if (item.objectName === 'https://apps.oskando.ee/seeme/Api/Vehicles/getRawData?objectId=1949&begTimestamp=2013-02-01&endTimestamp=2013-02-02&key=proovitoo1') {
+                    } else if (item.objectName === 'https://apps.oskando.ee/seeme/Api/Vehicles/' +
+                        'getRawData?objectId=1949&begTimestamp=2013-02-01&endTimestamp=2013-02-02&key=proovitoo1') {
                         vehicle_1949.push({ lat: item.latitude, lng: item.longitude });
-                    } else if (item.objectName === 'https://apps.oskando.ee/seeme/Api/Vehicles/getRawData?objectId=969&begTimestamp=2013-02-01&endTimestamp=2013-02-02&key=proovitoo1') {
+                    } else if (item.objectName === 'https://apps.oskando.ee/seeme/Api/Vehicles/' +
+                        'getRawData?objectId=969&begTimestamp=2013-02-01&endTimestamp=2013-02-02&key=proovitoo1') {
                         vehicle_969.push({ lat: item.latitude, lng: item.longitude });
                     }
 
@@ -73,26 +74,6 @@
                     { lat: 31.321, lng: -63.757 },
                     { lat: 24.774, lng: -79.190 },
                 ];
-
-                // Construct the polygon.
-                var bermudaTriangle = new google.maps.Polygon({
-                    paths: triangleCoords,
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.35
-                });
-
-
-                var bermudaTriangle2 = new google.maps.Polygon({
-                    paths: oneMore,
-                    strokeColor: '#ffff00',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: '#ffff00',
-                    fillOpacity: 0.35
-                });
 
 
                 //vehicle_1041 - dzeltens 
@@ -130,12 +111,19 @@
                 est2.setMap(map);
                 est3.setMap(map);
 
-                est1.addListener('click', showArray);
-                est2.addListener('click', showArray);
-                est3.addListener('click', showArray);
+                est1.addListener('click', showArrays('number1')),
+                est2.addListener('click', showArrays('number2'));
+                est3.addListener('click', showArrays('number3'));
 
-                function showArray(event) {
-                    alert('asa');
+
+                function showArrays(number) {
+                    if (number === 'number1') {
+                        alert(google.maps.geometry.spherical.computeArea(est1.getPath()));
+                    } else if (number === 'number2') {
+                        alert(google.maps.geometry.spherical.computeArea(est2.getPath()));
+                    } else if (number === 'number3') {
+                        alert(google.maps.geometry.spherical.computeArea(est3.getPath()));
+                    }
                 }
 
 
@@ -150,7 +138,7 @@
                 console.table([
                     { area: est1_area },
                     { area: est2_area },
-                    { area:  est3_area }
+                    { area: est3_area }
                 ]);
 
 
@@ -179,7 +167,11 @@ else
 
         </thead>
         <tbody>
-            
+            <tr>
+                <td>klllll</td>
+                <td>18292.00ha</td>
+            </tr>
+
         </tbody>
 
     </table>

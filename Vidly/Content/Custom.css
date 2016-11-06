@@ -1,0 +1,21 @@
+﻿.infoDiv {
+    height: 200px;
+    width: 300px;
+    -webkit-user-select: none;
+    background-color: white;
+}
+
+table tbody tr:hover {
+    background-color: orange;
+    cursor: pointer;
+}
+
+#map_canvas img {
+    max-width: none;
+    
+}
+
+#map_canvas {
+    height: 550px;
+}
+

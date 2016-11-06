@@ -1,84 +1,48 @@
 ﻿@model IEnumerable<Vidly.Models.Vehicle>
 @{
-    ViewBag.Title = "Main page";
+    ViewBag.Title = "Current cars";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Current cars!</h1>
-
-<style>
-    #map_canvas img {
-        max-width: none;
-    }
-</style>
-
-<!-- This css is to give a nice big popup "info window" when a marker is clicked on the map -->
-<style>
-    .infoDiv {
-        height: 200px;
-        width: 300px;
-        -webkit-user-select: none;
-        background-color: white;
-    }
-
-    table tbody tr:hover {
-    background-color: orange;
-    cursor: pointer;
-}
-</style>
+<h1>Current cars info</h1>
 <br/>
 
+<div id="map_canvas"></div>
 
-
-<!-- This is the div that will contain the Google Map -->
-<div id="map_canvas" style="height: 550px;"></div>
-
-<!-- Enclose the Javascript in a "section" so that it is rendered in the correct order after scripts have been loaded etc -->
 @section scripts {
     <section class="scripts">
 
         <script type="text/javascript">
 
-            //$(document).ready(function () {
-            //    $('table tbody tr').click(function () {
-            //        alert($(this).text());
-            //    });
-            //});
-
-
-            // This code tells the browser to execute the "Initialize" method only when the complete document model has been loaded. -->
-            $(document).ready(function() {
+            $(document).ready(function () {
                 initMap();
             });
 
-            // Where all the fun happens
             function initMap() {
 
                 // Google has tweaked their interface somewhat - this tells the api to use that new UI
                 google.maps.visualRefresh = true;
-                var Tunisie = new google.maps.LatLng(58.5953, 25.0136);
+                var Estonia = new google.maps.LatLng(58.5953, 25.0136);
 
                 // These are options that set initial zoom level, where the map is centered globally to start, and the type of map to show
                 var mapOptions = {
                     zoom: 7,
-                    center: Tunisie,
+                    center: Estonia,
                     mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
                 };
 
                 // This makes the div with id "map_canvas" a google map
                 var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-                var tableRow = document.getElementById('cool');
-
 
                 function getJsonData() {
                     $.ajax({
                         type: 'POST',
-                        url: '/Home/GetJSON',
+                        url: '/Home/GetJson',
                         dataType: 'json',
-                        success: function(data) {
+                        success: function (data) {
 
                             // Using the JQuery "each" selector to iterate through the JSON list and drop marker pins
-                            $.each(data, function(i, item) {
+                            $.each(data, function (i, item) {
                                 var marker = new google.maps.Marker({
                                     'position': new google.maps.LatLng(item.latitude, item.longitude),
                                     'map': map,
@@ -90,26 +54,17 @@
 
                                 // put in some information about each json object - in this case, the opening hours.
                                 var infowindow = new google.maps.InfoWindow({
-                                    content: "<div class='infoDiv'><h2>" + item.address + "</div></div>"
+                                    content: "<div class='infoDiv'><h2>" + "Numberplate: " + item.objectName + "\n"
+                                        + "Address: " + item.address + "</div></div>"
                                 });
 
                                 // finally hook up an "OnClick" listener to the map so it pops up out info-window when the marker-pin is clicked!
-                                google.maps.event.addListener(marker, 'click', function() {
+                                google.maps.event.addListener(marker, 'click', function () {
                                     infowindow.open(map, marker);
-                                    
+
                                 });
 
                             });
-
-
-                            //function handel data ends after this 
-                            //google.maps.event.addDomListener(tableRow, 'click', function () {
-                            //    //alert('table row');
-                            //    $('input').click(function () {
-                            //        alert($(this).val());
-                            //    });
-
-                            //});
 
                         }
                     });
@@ -121,7 +76,7 @@
 
 
             // gets input data from all input fields 
-            $('input').click(function() {
+            $('input').click(function () {
                 alert($(this).attr('id'));
             });
 
@@ -140,25 +95,25 @@ else
 {
     <table class="table table-bordered table-hover">
         <thead>
-        <tr>
-            <th>Choose</th>
-            <th>Address</th>
-            <th>Object name</th>
-            <th>Speed</th>
-            <th>Last Update</th>
-            <th>Last activity</th>
-        </tr>
+            <tr>
+                <th>Choose</th>
+                <th>Address</th>
+                <th>Object name</th>
+                <th>Speed</th>
+                <th>Last Update</th>
+                <th>Last activity</th>
+            </tr>
 
         </thead>
         <tbody id="cool">
             @foreach (var vehicle in Model)
             {
                 <tr>
-                    @* <td id="test">@Html.ActionLink(vehicle.address, "Index", "Customers", null)</td>*@
-                    <td><input type="checkbox" id="@vehicle.objectName" checked></td>
+                    <td>
+                        <input type="checkbox" id="@vehicle.objectName" checked></td>
                     <td>@vehicle.address</td>
                     <td>@vehicle.objectName</td>
-                    <td>@Convert.ToString(vehicle.speed)</td>
+                    <td>@vehicle.speed</td>
                     <td>@vehicle.timestamp</td>
                     <td>@vehicle.timeDifference</td>
                 </tr>

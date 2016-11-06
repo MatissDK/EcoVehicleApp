@@ -12,25 +12,28 @@ namespace Vidly.Controllers
 	{
 		//
 		// GET: /Home/Index
+
+		private new const string Url = "https://apps.oskando.ee/seeme/Api/Vehicles/getLastData?key=proovitoo1";
+
 		public ActionResult Index()
 		{
-			var listOfVehicles = GetVehicles();
+			var listOfVehicles = GetVehicles(Url);
 			return View(listOfVehicles);
 		}
 
 
-		public ActionResult GetJSON()
+		public ActionResult GetJson()
 		{
 
-			return Json(GetVehicles());
+			return Json(GetVehicles(Url));
 		}
 
 
 
-		public List<Vehicle> GetVehicles()
+		public List<Vehicle> GetVehicles(string url)
 		{
 			Parser myParser = new Parser();
-		    List<Vehicle> myList = myParser.ParseGetLastVehicleData();
+			List<Vehicle> myList = myParser.ParseGetLastVehicleData(url);
 			return myList;
 		}
 	}
