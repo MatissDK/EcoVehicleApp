@@ -1,0 +1,192 @@
+﻿@model IEnumerable<Vidly.Models.Vehicle>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Vehicles Overlaping</h2>
+
+
+
+<!-- This is the div that will contain the Google Map -->
+<div id="map" style="width: 100%; height: 500px"></div>
+
+<!-- Enclose the Javascript in a "section" so that it is rendered in the correct order after scripts have been loaded etc -->
+
+@section scripts {
+
+    @*    // This example creates a simple polygon representing the Bermuda Triangle.*@
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: { lat: 58.5953, lng: 25.0136 },
+                mapTypeId: 'terrain'
+            });
+
+
+            function getJsonData() {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Vehicles/GetJsonData1041',
+                    dataType: 'json',
+                    success: function(myControllerJsonData) {
+                        handleData(myControllerJsonData);
+                       // debugger;
+
+                    }
+                });
+            }
+
+            getJsonData();
+
+
+            function handleData(data) {
+
+                var vehicle_1041 = [];
+                var vehicle_1949 = [];
+                var vehicle_969 = [];
+
+                $.each(data, function(i, item) {
+                    if (item.objectName === 'https://apps.oskando.ee/seeme/Api/Vehicles/getRawData?objectId=1041&begTimestamp=2013-02-01&endTimestamp=2013-02-02&key=proovitoo1') {
+                        vehicle_1041.push({ lat: item.latitude, lng: item.longitude });
+                    } else if (item.objectName === 'https://apps.oskando.ee/seeme/Api/Vehicles/getRawData?objectId=1949&begTimestamp=2013-02-01&endTimestamp=2013-02-02&key=proovitoo1') {
+                        vehicle_1949.push({ lat: item.latitude, lng: item.longitude });
+                    } else if (item.objectName === 'https://apps.oskando.ee/seeme/Api/Vehicles/getRawData?objectId=969&begTimestamp=2013-02-01&endTimestamp=2013-02-02&key=proovitoo1') {
+                        vehicle_969.push({ lat: item.latitude, lng: item.longitude });
+                    }
+
+                });
+
+                // Define the LatLng coordinates for the polygon's path.
+                var triangleCoords = [
+                    { lat: 25.774, lng: -80.190 },
+                    { lat: 18.466, lng: -66.118 },
+                    { lat: 32.321, lng: -64.757 },
+                    { lat: 25.774, lng: -80.190 },
+                ];
+
+
+                var oneMore = [
+                    { lat: 24.774, lng: -79.190 },
+                    { lat: 17.466, lng: -65.118 },
+                    { lat: 31.321, lng: -63.757 },
+                    { lat: 24.774, lng: -79.190 },
+                ];
+
+                // Construct the polygon.
+                var bermudaTriangle = new google.maps.Polygon({
+                    paths: triangleCoords,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35
+                });
+
+
+                var bermudaTriangle2 = new google.maps.Polygon({
+                    paths: oneMore,
+                    strokeColor: '#ffff00',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#ffff00',
+                    fillOpacity: 0.35
+                });
+
+
+                //vehicle_1041 - dzeltens 
+                var est1 = new google.maps.Polygon({
+                    paths: vehicle_1041,
+                    strokeColor: '#000000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#ffff00',
+                    fillOpacity: 0.35
+                });
+
+                //vehicle_1949 - sarkans 
+                var est2 = new google.maps.Polygon({
+                    paths: vehicle_1949,
+                    strokeColor: '#b30000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#b30000',
+                    fillOpacity: 0.35
+                });
+
+                //vehicle_969 - zils 
+                var est3 = new google.maps.Polygon({
+                    paths: vehicle_969,
+                    strokeColor: '#0066ff',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#0066ff',
+                    fillOpacity: 0.35
+                });
+
+
+                est1.setMap(map);
+                est2.setMap(map);
+                est3.setMap(map);
+
+                est1.addListener('click', showArray);
+                est2.addListener('click', showArray);
+                est3.addListener('click', showArray);
+
+                function showArray(event) {
+                    alert('asa');
+                }
+
+
+                est1_area = google.maps.geometry.spherical.computeArea(est1.getPath()),
+                est2_area = google.maps.geometry.spherical.computeArea(est2.getPath());
+                est3_area = google.maps.geometry.spherical.computeArea(est3.getPath());
+
+                // alert('My area left: ' + areaLeft);
+                // alert('My area left: ' + areaRight);
+
+                // LOG: Check your console
+                console.table([
+                    { area: est1_area },
+                    { area: est2_area },
+                    { area:  est3_area }
+                ]);
+
+
+            }
+
+            //ends handleData function
+        }
+
+    </script>
+}
+
+<br>
+<br>
+@if (!Model.Any())
+{
+    <h1>Sorry, server error</h1>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Object Name</th>
+                <th>Latitude</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            
+        </tbody>
+
+    </table>
+}
+
+
+
+
+
+
