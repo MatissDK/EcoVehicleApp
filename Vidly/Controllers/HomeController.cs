@@ -10,9 +10,12 @@ namespace Vidly.Controllers
 {
 	public class HomeController : Controller
 	{
-		//
-		// GET: /Home/Index
-
+		
+        /// <summary>
+        /// Index() is called when main View is loaded. 
+        /// GetJson() is called from the view by Ajax call and provided information
+        /// to the view in JSON format. 
+        /// </summary>
 		private new const string Url = "https://apps.oskando.ee/seeme/Api/Vehicles/getLastData?key=proovitoo1";
 
 		public ActionResult Index()

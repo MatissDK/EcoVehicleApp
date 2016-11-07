@@ -8,7 +8,17 @@ namespace Vidly.Models
     public class Parser
     {
 
-        //parsing data 
+       /// <summary>
+        /// ParseGetLastVehicleData() takes url paramter and returns to Home Conroller List<Vehicle>, 
+        /// only adds neccessary information to Vehicle object 
+        /// 
+        /// 
+        /// ParseRawVehicleData() takes urlparameter and returns to Vehicles Controller List<Vehicle>,
+        /// 
+        /// 
+       /// </summary>
+       /// <param name="url"></param>
+       /// <returns></returns>
         public List<Vehicle> ParseGetLastVehicleData(string url)
         {
             List<Vehicle> myVehiclesList = new List<Vehicle>();
@@ -42,13 +52,6 @@ namespace Vidly.Models
 
         }
 
-
-
-        /// <summary>
-        /// parsing Raw data for poligon 
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
 
         public List<Vehicle> ParseRawVehicleData(string url)
         {

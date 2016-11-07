@@ -11,7 +11,10 @@ namespace Vidly.Utils
     {
         
          /// <summary>
-         ///  get rid of millisecond 
+         ///  
+         /// ConvertStringToTimeDifference() takes string paramter and removes milliseconds 
+         /// TrimOffTimeZone() is used to provide data time in string format from Model to the View without time zone attachment 
+         ///  
          /// </summary>
          /// <param name="date"></param>
          /// <returns></returns>
