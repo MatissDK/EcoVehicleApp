@@ -15,15 +15,12 @@ namespace Vidly.Controllers
         private const string Vehicle1949 = "https://apps.oskando.ee/seeme/Api/Vehicles/getRawData?objectId=1949&begTimestamp=2013-02-01&endTimestamp=2013-02-02&key=proovitoo1";
         private const string Vehicle969 = "https://apps.oskando.ee/seeme/Api/Vehicles/getRawData?objectId=969&begTimestamp=2013-02-01&endTimestamp=2013-02-02&key=proovitoo1";
 
-
-        //
-        // GET: /Vehicles/
         public ActionResult Index()
         {
             return View(GetVehicles(Vehicle1041));
         }
 
-        public ActionResult GetJsonData1041()
+        public ActionResult GetJsonDataData()
         {
             List<Vehicle> myList1041 = GetVehicles(Vehicle1041);
             List<Vehicle> myList1949 = GetVehicles(Vehicle1949);
