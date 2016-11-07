@@ -9,11 +9,8 @@
 <!-- This is the div that will contain the Google Map -->
 <div id="map" style="width: 100%; height: 500px"></div>
 
-<!-- Enclose the Javascript in a "section" so that it is rendered in the correct order after scripts have been loaded etc -->
-
 @section scripts {
 
-    @*    // This example creates a simple polygon representing the Bermuda Triangle.*@
     <script>
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
@@ -85,19 +82,12 @@
                     fillOpacity: 0.35
                 });
 
-
-                // put in some information about each json object - in this case, the opening hours.
-                var infowindow = new google.maps.InfoWindow({
-                    content: "<div class='infoDiv'><h2>" + "Numberplate: " + 'lol' + "\n"
-                        + "Address: " + 'aass' + "</div></div>"
-                });
-
                 est1.setMap(map);
                 est2.setMap(map);
                 est3.setMap(map);
 
                 google.maps.event.addListener(est1, 'click', function () {
-                    alert(convertToHectars(this));
+                    alert(convertToHectars(this) + 'asdas');
                 });
                 google.maps.event.addListener(est2, 'click', function () {
                     alert(convertToHectars(this));
@@ -109,10 +99,10 @@
                 function convertToHectars(parameter) {
                     var lol = google.maps.geometry.spherical.computeArea(parameter.getPath()) * 0.001;
                     var roundedValue = Math.round(lol);
-                    return 'Area is '+ roundedValue + ' ha large';
+                    return 'Area is '+ roundedValue + ' hectares large';
                 }
             }
-            //ends handleData function
+          
         }
 
     </script>
@@ -120,7 +110,7 @@
 
 <br>
 <br>
-@if (!Model.Any())
+@*@if (!Model.Any())
 {
     <h1>Sorry, can't connect to server</h1>
 }
@@ -130,7 +120,7 @@ else
         <thead>
             <tr>
                 <th>Object Name</th>
-                <th>Latitude</th>
+                <th>Area in hectares</th>
             </tr>
         </thead>
         <tbody>
@@ -140,7 +130,7 @@ else
             </tr>
         </tbody>
     </table>
-}
+}*@
 
 
 
