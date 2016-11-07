@@ -37,7 +37,6 @@ namespace Vidly.Controllers
 
         public List<Vehicle> GetVehicles(string url)
         {
-
             Parser mParser = new Parser();
             List<Vehicle> myList = mParser.ParseRawVehicleData(url);
             return myList;

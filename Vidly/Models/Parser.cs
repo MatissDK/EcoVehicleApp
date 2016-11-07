@@ -13,7 +13,17 @@ namespace Vidly.Models
         {
             List<Vehicle> myVehiclesList = new List<Vehicle>();
             XmlDocument doc = new XmlDocument();
-            doc.Load(url);
+
+            try
+            {
+                doc.Load(url);
+            }
+            catch (Exception exception)
+            {
+
+                throw exception;
+            }
+
             XmlNodeList nodes = doc.DocumentElement.SelectNodes("/nodes/response/node");
 
             foreach (XmlNode node in nodes)

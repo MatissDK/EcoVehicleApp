@@ -11,12 +11,14 @@
 
 @section scripts {
     <section class="scripts">
-
         <script type="text/javascript">
 
-            $(document).ready(function () {
+            $(document).ready(function() {
                 initMap();
             });
+
+            var gmarkers = [];
+            var map;
 
             function initMap() {
 
@@ -32,22 +34,25 @@
                 };
 
                 // This makes the div with id "map_canvas" a google map
-                var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+                map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
                 function getJsonData() {
                     $.ajax({
                         type: 'POST',
                         url: '/Home/GetJson',
                         dataType: 'json',
-                        success: function (data) {
+                        success: function(data) {
 
                             // Using the JQuery "each" selector to iterate through the JSON list and drop marker pins
-                            $.each(data, function (i, item) {
+                            $.each(data, function(i, item) {
                                 var marker = new google.maps.Marker({
                                     'position': new google.maps.LatLng(item.latitude, item.longitude),
                                     'map': map,
-                                    'title': item.address
+                                    'title': item.objectName
+
                                 });
+
+                                gmarkers.push(marker);
 
                                 // Make the marker-pin blue!
                                 marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
@@ -59,7 +64,7 @@
                                 });
 
                                 // finally hook up an "OnClick" listener to the map so it pops up out info-window when the marker-pin is clicked!
-                                google.maps.event.addListener(marker, 'click', function () {
+                                google.maps.event.addListener(marker, 'click', function() {
                                     infowindow.open(map, marker);
 
                                 });
@@ -75,11 +80,21 @@
             }
 
 
-            // gets input data from all input fields 
-            $('input').click(function () {
-                alert($(this).attr('id'));
-            });
+            //gets input data from all input fields 
+            $('input').click(function() {
+                for (var i = gmarkers.length - 1; i >= 0; i--) {
+                    if ($(this).attr('id') === gmarkers[i].title) {
+                        if (!$(this).is(':checked')) {
+                            gmarkers[i].setMap(null);
+                            return;
+                        } else {
+                            gmarkers[i].setMap(map);
+                            return;
+                        }
+                    }
+                }
 
+            });
 
         </script>
     </section>
@@ -110,7 +125,7 @@ else
             {
                 <tr>
                     <td>
-                        <input type="checkbox" id="@vehicle.objectName" checked></td>
+                    <input type="checkbox" id="@vehicle.objectName" checked></td>
                     <td>@vehicle.address</td>
                     <td>@vehicle.objectName</td>
                     <td>@vehicle.speed</td>
@@ -119,7 +134,6 @@ else
                 </tr>
             }
         </tbody>
-
     </table>
 }
 
