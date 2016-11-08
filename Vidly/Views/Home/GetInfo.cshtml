@@ -1,29 +1,18 @@
-﻿@*@model IEnumerable<Vidly.Models.Vehicle>*@
-@model Vidly.Models.Vehicle
+﻿@model IEnumerable<Vidly.Models.Vehicle>
+
 
 @{
     ViewBag.Title = "Current cars";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h1>Current cars info</h1>
 <br/>
-
-@using(Html.BeginForm("GetInfo","Home"))
-{
-    <div class="form-group">
-        @Html.LabelFor(m => m.url)
-        @Html.TextBoxFor(m => m.url, new { @class = "form-control" })
-    </div>
-    <button type="submit" class="btn btn-primary">OK</button>    
-}
-
 
 <div id="map_canvas"></div>
 
 
-
-
-@*@section scripts {
+@section scripts {
     <section class="scripts">
         <script type="text/javascript">
 
@@ -100,12 +89,12 @@
 
         </script>
     </section>
-}*@
+}
 
 <br>
 <br>
 
-@*@if (!Model.Any())
+@if (!Model.Any())
 {
     <p>Sorry, no connection to Server</p>
 }
@@ -138,7 +127,7 @@ else
             }
         </tbody>
     </table>
-}*@
+}
 
 
 

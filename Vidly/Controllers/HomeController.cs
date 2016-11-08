@@ -1,43 +1,106 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Vidly.Models;
 
 
 namespace Vidly.Controllers
 {
-	public class HomeController : Controller
-	{
-		
+
+   
+    public class HomeController : Controller
+    {
+
+       
+        private static List<Vehicle> _myListOfLastData;
+        private static List<Vehicle> _myRawData; 
+        
+
+        //display window with url input field 
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        //shows data when API key is provided 
+        [HttpPost]
+        public ActionResult GetInfo(string url)
+        {
+            try
+            {
+                GetVehicles(url);
+            }
+            catch (Exception exception)
+            {
+
+                return Redirect("ArgumentError");
+            }
+            
+            return View(_myListOfLastData);
+        }
+
+        //returns JSON data to GetInfo view 
+        public ActionResult GetJson()
+        {
+            return Json(_myListOfLastData);
+        }
+
+
+        //shows window with date input data 
+        public ActionResult DataInput()
+        {    
+            return View();
+        }
+
+
+        //need to provide date from user input 
+        [HttpPost]
+        public ActionResult ShowPolygonInfo(string date)
+        {
+            date = "2014-05-23";
+            GetVehiclesRawData(date);
+            return View(_myRawData);
+        }
+
+
+        public ActionResult JsonForPolygons()
+        {
+            return Json(_myRawData);
+        }
+
+        [HttpPost]
+        public ActionResult ArgumentError()
+        {
+            return View();
+        }
+
+
         /// <summary>
-        /// Index() is called when main View is loaded. 
-        /// GetJson() is called from the view by Ajax call and provided information
-        /// to the view in JSON format. 
+        ///  ////////////////////////
         /// </summary>
-		private new const string Url = "https://apps.oskando.ee/seeme/Api/Vehicles/getLastData?key=proovitoo1";
+       
 
-		public ActionResult Index()
-		{
-			var listOfVehicles = GetVehicles(Url);
-			return View(listOfVehicles);
-		}
-
-
-		public ActionResult GetJson()
-		{
-
-			return Json(GetVehicles(Url));
-		}
+        //makes connection to getLatestData API
+        public void GetVehicles(string url)
+        {
+            var myParser = new Parser();
+            _myListOfLastData = myParser.ParseGetLastVehicleData(url);
+        }
 
 
+        //gets raw data about vehicles for provided date 
+        public void GetVehiclesRawData(string date)
+        {
+            var objectIdArrayList = new ArrayList();
+            foreach (var outData in _myListOfLastData)
+            {
+                objectIdArrayList.Add(outData.ObjectId);
+            }
 
-		public List<Vehicle> GetVehicles(string url)
-		{
-			Parser myParser = new Parser();
-			List<Vehicle> myList = myParser.ParseGetLastVehicleData(url);
-			return myList;
-		}
-	}
+            var mParser = new Parser();
+            _myRawData = mParser.ParseRawVehicleData(date, objectIdArrayList);
+           
+        }
+    }
 }

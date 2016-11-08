@@ -35,5 +35,16 @@ namespace Vidly.Utils
 
         }
 
+        public static string UrlCreator(string date, string objectId)
+        {
+            //2014-05-23
+            string url =
+                "https://apps.oskando.ee/seeme/Api/Vehicles/getRawData?objectId=" + objectId +
+                "&begTimestamp=" + date + "&endTimestamp=2014-05-24&key=proovitoo1";
+
+            return url;
+
+        }
+
     }
 }

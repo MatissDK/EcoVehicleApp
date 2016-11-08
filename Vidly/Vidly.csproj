@@ -139,6 +139,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Vehicles\Index.cshtml" />
+    <Content Include="Views\Vehicles\Action.cshtml" />
+    <Content Include="Views\Home\GetInfo.cshtml" />
+    <Content Include="Views\Home\DataInput.cshtml" />
+    <Content Include="Views\Home\ShowPolygonInfo.cshtml" />
+    <Content Include="Views\Home\ArgumentError.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

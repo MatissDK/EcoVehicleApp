@@ -1,0 +1,18 @@
+﻿@model Vidly.Models.Vehicle
+@{
+    ViewBag.Title = "DataInputResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DataInputResult</h2>
+
+@using(Html.BeginForm("ShowPolygonInfo","Home"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.timestamp)
+        @Html.TextBoxFor(m => m.timestamp, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">OK</button>    
+}
+
+
