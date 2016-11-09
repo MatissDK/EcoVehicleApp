@@ -49,17 +49,11 @@ namespace Vidly.Controllers
         }
 
 
-        //shows window with date input data 
-        public ActionResult DataInput()
-        {    
-            return View();
-        }
-
-
         //need to provide date from user input 
         //[HttpPost]
         public ActionResult ShowPolygonInfo(string date)
         {
+            //date = "02/01/2013";
             try
             {
                 GetVehiclesRawData(date);
@@ -71,6 +65,11 @@ namespace Vidly.Controllers
                 return RedirectToAction("ArgumentError", "Home");
             }
             
+        }
+
+        public ActionResult Demo()
+        {
+            return View();
         }
 
 

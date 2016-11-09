@@ -121,7 +121,6 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\VehiclesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -141,9 +140,9 @@
     <Content Include="Views\Vehicles\Index.cshtml" />
     <Content Include="Views\Vehicles\Action.cshtml" />
     <Content Include="Views\Home\GetInfo.cshtml" />
-    <Content Include="Views\Home\DataInput.cshtml" />
     <Content Include="Views\Home\ShowPolygonInfo.cshtml" />
     <Content Include="Views\Home\ArgumentError.cshtml" />
+    <Content Include="Views\Home\Demo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

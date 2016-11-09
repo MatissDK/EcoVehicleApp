@@ -9,13 +9,12 @@
 <br/>
 
 
-
 @using(Html.BeginForm("GetInfo","Home"))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Url)
         @Html.TextBoxFor(m => m.Url, new {@class = "form-control"})
-        @Html.ValidationMessageFor(m=>m.Url)
+        @Html.ValidationMessageFor(m => m.Url)
     </div>
     <button type="submit" class="btn btn-primary">OK</button>    
 }

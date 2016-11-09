@@ -1,0 +1,124 @@
+﻿
+@{
+	ViewBag.Title = "Demo";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+	#map {
+		width: 100%;
+		height: 500px;
+		border: solid 1px;
+		border-color: #008900;
+	}
+</style>
+
+<h2>Demo</h2>
+
+<script src="https://cdn.rawgit.com/bjornharrtell/jsts/gh-pages/1.1.2/jsts.min.js"></script>
+<div id="map"></div>
+
+
+@section scripts {
+	<section class="scripts">
+		<script type="text/javascript">
+
+			function initMap() {
+				var map = new google.maps.Map(document.getElementById('map'), {
+					zoom: 7,
+					center: { lat: 58.3776, lng: 26.7290 },
+					mapTypeId: google.maps.MapTypeId.TERRAIN
+				});
+
+				var firstObjectCoords = [
+					{ lat: 58.3776, lng: 26.7290 },
+					{ lat: 58.1110, lng: 26.0002 },
+					{ lat: 59.3776, lng: 24.7290 },
+					{ lat: 58.3776, lng: 26.7290 }
+				];
+
+				var firstObject = new google.maps.Polygon({
+					paths: firstObjectCoords,
+					strokeColor: '#FF0000',
+					strokeOpacity: 0.8,
+					strokeWeight: 2,
+					fillColor: '#FF0000',
+					fillOpacity: 0.35
+				});
+				firstObject.setMap(map);
+
+				var anotherCoords = [
+					{ lat: 58.110, lng: 26.7290 },
+					{ lat: 58.0000, lng: 23.2362 },
+					{ lat: 58.1776, lng: 24.7290 },
+					{ lat: 58.3776, lng: 26.7290 }
+				];
+
+				var secondObject = new google.maps.Polygon({
+					paths: anotherCoords,
+					strokeColor: '#0000FF',
+					strokeOpacity: 0.8,
+					strokeWeight: 2,
+					fillColor: '#0000FF',
+					fillOpacity: 0.35
+				});
+				secondObject.setMap(map);
+
+				google.maps.event.addListener(firstObject, 'click', function() {
+					alert(convertToHectars(this));
+				});
+				google.maps.event.addListener(secondObject, 'click', function() {
+					alert(convertToHectars(this));
+				});
+
+				var geometryFactory = new jsts.geom.GeometryFactory();
+				var firstPolygon = createJstsPolygon(geometryFactory, firstObject);
+				var anotherPolygon = createJstsPolygon(geometryFactory, secondObject);
+				var intersection = firstPolygon.intersection(anotherPolygon);
+				drawIntersectionArea(map, intersection);
+			}
+
+			function convertToHectars(parameter) {
+				var hectaresOut = google.maps.geometry.spherical.computeArea(parameter.getPath()) * 0.001;
+				var roundedHectares = Math.round(hectaresOut);
+				return 'Area is ' + roundedHectares + ' hectares large';
+			}
+
+
+			function drawIntersectionArea(map, polygon) {
+				var coords = polygon.getCoordinates().map(function(coord) {
+					return { lat: coord.x, lng: coord.y };
+				});
+
+				var intersectionArea = new google.maps.Polygon({
+					paths: coords,
+					strokeColor: '#00FF00',
+					strokeOpacity: 0.8,
+					strokeWeight: 4,
+					fillColor: '#00FF00',
+					fillOpacity: 0.35
+				});
+				intersectionArea.setMap(map);
+				google.maps.event.addListener(intersectionArea, 'click', function() {
+				    alert('Overlapping ' + convertToHectars(this));
+				});
+			}
+
+
+			function createJstsPolygon(geometryFactory, polygon) {
+				var path = polygon.getPath();
+				var coordinates = path.getArray().map(function name(coord) {
+					return new jsts.geom.Coordinate(coord.lat(), coord.lng());
+				});
+				coordinates.push(coordinates[0]);
+				var shell = geometryFactory.createLinearRing(coordinates);
+				return geometryFactory.createPolygon(shell);
+			}
+
+			google.maps.event.addDomListener(window, 'load', initMap);
+
+		</script>
+	</section>
+}
+
+

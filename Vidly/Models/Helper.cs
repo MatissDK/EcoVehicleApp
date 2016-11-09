@@ -35,6 +35,7 @@ namespace Vidly.Utils
 
         }
 
+
         public static string UrlCreator(string date, string objectId)
         {
             var dateFrom = DateTime.ParseExact(date, "MM/dd/yyyy", null);
@@ -42,19 +43,9 @@ namespace Vidly.Utils
 
             string outputUrl = "https://apps.oskando.ee/seeme/Api/Vehicles/getRawData?objectId=" + objectId +
                 "&begTimestamp=" + date + "&endTimestamp=" + dateTo + "&key=proovitoo1";
-
             return outputUrl;
 
         }
 
-        public static string DateTimeChanger(string inputDate)
-        {
-            //valid date 2014-05-23
-            //11/30/2016
-
-            string a = DateTime.ParseExact(inputDate, "MM/dd/yyyy", null).ToString("yyyy-M-d dddd");
-            return a;
-        }
-
-}
+    }
 }

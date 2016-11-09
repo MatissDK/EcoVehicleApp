@@ -12,7 +12,7 @@ namespace Vidly.Models
 
         [Required]
         [StringLength(255,MinimumLength = 1)]
-        [Display(Name = "Please enter your Url")]
+        [Display(Name = "Please enter your API key to check latest data")]
         public string Url { get; set; }
 
         public string address { get; set; }
