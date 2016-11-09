@@ -11,9 +11,9 @@ namespace Vidly.Models
 
 
         [Required]
-        [StringLength(255)]
-        [Display(Name = "Please enter your url")]
-        public string url { get; set; }
+        [StringLength(255,MinimumLength = 1)]
+        [Display(Name = "Please enter your Url")]
+        public string Url { get; set; }
 
         public string address { get; set; }
         public double latitude { get; set; }
@@ -24,7 +24,10 @@ namespace Vidly.Models
         public string timeDifference { get; set; }
 
         [Display(Name = "Please enter your date")]
+        [StringLength(100,MinimumLength = 1)]
         public string timestamp { get; set; }
+
+
         public int ObjectId { get; set; }
 
         //test data 

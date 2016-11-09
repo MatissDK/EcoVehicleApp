@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Vidly.Models;
 
 
+
 namespace Vidly.Controllers
 {
 
@@ -17,7 +18,7 @@ namespace Vidly.Controllers
         private static List<Vehicle> _myRawData; 
         
 
-        //display window with url input field 
+        //display window with Url input field 
         public ActionResult Index()
         {
             return View();
@@ -34,11 +35,12 @@ namespace Vidly.Controllers
             catch (Exception exception)
             {
 
-                return Redirect("ArgumentError");
+                return RedirectToAction("ArgumentError","Home");
             }
             
             return View(_myListOfLastData);
         }
+
 
         //returns JSON data to GetInfo view 
         public ActionResult GetJson()
@@ -55,12 +57,20 @@ namespace Vidly.Controllers
 
 
         //need to provide date from user input 
-        [HttpPost]
+        //[HttpPost]
         public ActionResult ShowPolygonInfo(string date)
         {
-            date = "2014-05-23";
-            GetVehiclesRawData(date);
-            return View(_myRawData);
+            try
+            {
+                GetVehiclesRawData(date);
+                return View(_myRawData);
+            }
+            catch (Exception exception)
+            {
+
+                return RedirectToAction("ArgumentError", "Home");
+            }
+            
         }
 
 
@@ -69,9 +79,10 @@ namespace Vidly.Controllers
             return Json(_myRawData);
         }
 
-        [HttpPost]
+       
         public ActionResult ArgumentError()
         {
+            
             return View();
         }
 

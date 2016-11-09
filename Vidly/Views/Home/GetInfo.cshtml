@@ -7,7 +7,21 @@
 }
 
 <h1>Current cars info</h1>
+<h3>Pick date to check polygons </h3>
 <br/>
+
+@using (Html.BeginForm("ShowPolygonInfo", "Home"))
+{
+
+    <div class="form-group">
+      
+        <input type="text" id="MyDate" name="date"/>
+        <br/>
+        <br/>
+        <button type="submit" class="btn btn-primary">OK</button>
+    </div>
+}
+
 
 <div id="map_canvas"></div>
 
@@ -69,8 +83,13 @@
                         }
                     });
                 }
+
                 getJsonData();
+             
+                    $('#MyDate').datepicker();
+                
             }
+
             //gets input data from all input fields 
             $('input').click(function() {
                 for (var i = gmarkers.length - 1; i >= 0; i--) {
@@ -89,6 +108,8 @@
 
         </script>
     </section>
+
+    
 }
 
 <br>
@@ -128,6 +149,7 @@ else
         </tbody>
     </table>
 }
+
 
 
 

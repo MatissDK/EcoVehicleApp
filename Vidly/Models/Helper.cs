@@ -9,15 +9,15 @@ namespace Vidly.Utils
 {
     public class Helper
     {
-        
-         /// <summary>
-         ///  
-         /// ConvertStringToTimeDifference() takes string paramter and removes milliseconds 
-         /// TrimOffTimeZone() is used to provide data time in string format from Model to the View without time zone attachment 
-         ///  
-         /// </summary>
-         /// <param name="date"></param>
-         /// <returns></returns>
+
+        /// <summary>
+        ///  
+        /// ConvertStringToTimeDifference() takes string paramter and removes milliseconds 
+        /// TrimOffTimeZone() is used to provide data time in string format from Model to the View without time zone attachment 
+        ///  
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
 
         public static string ConvertStringToTimeDifference(string date)
         {
@@ -37,14 +37,24 @@ namespace Vidly.Utils
 
         public static string UrlCreator(string date, string objectId)
         {
-            //2014-05-23
-            string url =
-                "https://apps.oskando.ee/seeme/Api/Vehicles/getRawData?objectId=" + objectId +
-                "&begTimestamp=" + date + "&endTimestamp=2014-05-24&key=proovitoo1";
+            var dateFrom = DateTime.ParseExact(date, "MM/dd/yyyy", null);
+            var dateTo = dateFrom.AddDays(1).ToString("MM/dd/yyyy");
 
-            return url;
+            string outputUrl = "https://apps.oskando.ee/seeme/Api/Vehicles/getRawData?objectId=" + objectId +
+                "&begTimestamp=" + date + "&endTimestamp=" + dateTo + "&key=proovitoo1";
+
+            return outputUrl;
 
         }
 
-    }
+        public static string DateTimeChanger(string inputDate)
+        {
+            //valid date 2014-05-23
+            //11/30/2016
+
+            string a = DateTime.ParseExact(inputDate, "MM/dd/yyyy", null).ToString("yyyy-M-d dddd");
+            return a;
+        }
+
+}
 }

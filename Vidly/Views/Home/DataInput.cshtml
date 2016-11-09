@@ -4,15 +4,46 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>DataInputResult</h2>
 
-@using(Html.BeginForm("ShowPolygonInfo","Home"))
+<h2>Input your date</h2>
+
+
+@*@using(Html.BeginForm("GetInfo","Home"))
 {
     <div class="form-group">
-        @Html.LabelFor(m => m.timestamp)
-        @Html.TextBoxFor(m => m.timestamp, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Url)
+        @Html.TextBoxFor(m => m.Url, new { @class = "form-control" })
     </div>
     <button type="submit" class="btn btn-primary">OK</button>    
+}*@
+
+
+
+@using (Html.BeginForm("ShowPolygonInfo", "Home"))
+{
+
+    <div class="form-group">
+        <input type="text" id="MyDate" name="date" value="08/11/2016"/>
+        <br/>
+        <br/>
+        <button type="submit" class="btn btn-primary">OK</button>
+    </div>
+}
+
+@section scripts {
+    <section class="scripts">
+        <script type="text/javascript">
+            
+            $(document).ready(function () {
+                    $('#MyDate').datepicker(); 
+                });
+
+            //$(function () { 
+            //    $('#MyDate').datepicker(); 
+            //});
+
+        </script>
+    </section>
 }
 
 

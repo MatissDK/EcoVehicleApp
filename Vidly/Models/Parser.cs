@@ -11,27 +11,24 @@ namespace Vidly.Models
     public class Parser
     {
 
-       /// <summary>
-        /// ParseGetLastVehicleData() takes url paramter and returns to Home Conroller List<Vehicle>, 
+        /// <summary>
+        /// ParseGetLastVehicleData() takes Url paramter and returns to Home Conroller List<Vehicle>, 
         /// only adds neccessary information to Vehicle object 
         /// 
         /// 
         /// ParseRawVehicleData() takes urlparameter and returns to Vehicles Controller List<Vehicle>,
         /// 
         /// 
-       /// </summary>
-       /// <param name="url"></param>
-       /// <returns></returns>
-       /// 
-       
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        /// 
+
         public List<Vehicle> ParseGetLastVehicleData(string url)
         {
             List<Vehicle> myVehiclesList = new List<Vehicle>();
             XmlDocument doc = new XmlDocument();
-
-           
-                doc.Load(url);
-
+            doc.Load(url);
             XmlNodeList nodes = doc.DocumentElement.SelectNodes("/nodes/response/node");
 
             foreach (XmlNode node in nodes)
@@ -41,7 +38,7 @@ namespace Vidly.Models
                 myVehicle.latitude = Double.Parse(node.SelectSingleNode("latitude").InnerText);
                 myVehicle.longitude = Double.Parse(node.SelectSingleNode("longitude").InnerText);
                 myVehicle.objectName = node.SelectSingleNode("objectName").InnerText;
-                myVehicle.timestamp =  Helper.TrimOffTimeZone(node.SelectSingleNode("timestamp").InnerText);
+                myVehicle.timestamp = Helper.TrimOffTimeZone(node.SelectSingleNode("timestamp").InnerText);
                 myVehicle.timeDifference = Helper.ConvertStringToTimeDifference(node.SelectSingleNode("timestamp").InnerText);
                 myVehicle.speed = Double.Parse(node.SelectSingleNode("speed").InnerText);
                 myVehicle.ObjectId = Int32.Parse(node.SelectSingleNode("objectId").InnerText);
@@ -57,7 +54,7 @@ namespace Vidly.Models
         {
             List<Vehicle> myVehiclesList = new List<Vehicle>();
             foreach (var outData in objectIdArray)
-            {              
+            {
                 XmlDocument doc = new XmlDocument();
                 doc.Load(Helper.UrlCreator(date, outData.ToString()));
                 XmlNodeList nodes = doc.DocumentElement.SelectNodes("/nodes/response/node");

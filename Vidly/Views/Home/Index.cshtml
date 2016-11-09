@@ -8,137 +8,20 @@
 
 <br/>
 
+
+
 @using(Html.BeginForm("GetInfo","Home"))
 {
     <div class="form-group">
-        @Html.LabelFor(m => m.url)
-        @Html.TextBoxFor(m => m.url, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Url)
+        @Html.TextBoxFor(m => m.Url, new {@class = "form-control"})
+        @Html.ValidationMessageFor(m=>m.Url)
     </div>
     <button type="submit" class="btn btn-primary">OK</button>    
 }
 
 
-<div id="map_canvas"></div>
 
-
-
-
-@*@section scripts {
-    <section class="scripts">
-        <script type="text/javascript">
-
-            $(document).ready(function() {
-                initMap();
-            });
-
-            var gmarkers = [];
-            var map;
-
-            function initMap() {
-
-                google.maps.visualRefresh = true;
-                var Estonia = new google.maps.LatLng(58.5953, 25.0136);
-
-                var mapOptions = {
-                    zoom: 7,
-                    center: Estonia,
-                    mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
-                };
-
-                map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-
-                function getJsonData() {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/Home/GetJson',
-                        dataType: 'json',
-                        success: function(data) {
-
-                            $.each(data, function(i, item) {
-                                var marker = new google.maps.Marker({
-                                    'position': new google.maps.LatLng(item.latitude, item.longitude),
-                                    'map': map,
-                                    'title': item.objectName
-
-                                });
-
-                                gmarkers.push(marker);
-                                marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
-
-                                var infowindow = new google.maps.InfoWindow({
-                                    content: "<div class='infoDiv'><h2>" + "Numberplate: " + item.objectName + "\n"
-                                        + "Address: " + item.address + "</div></div>"
-                                });
-
-                                google.maps.event.addListener(marker, 'click', function() {
-                                    infowindow.open(map, marker);
-
-                                });
-
-                            });
-
-                        }
-                    });
-                }
-                getJsonData();
-            }
-            //gets input data from all input fields 
-            $('input').click(function() {
-                for (var i = gmarkers.length - 1; i >= 0; i--) {
-                    if ($(this).attr('id') === gmarkers[i].title) {
-                        if (!$(this).is(':checked')) {
-                            gmarkers[i].setMap(null);
-                            return;
-                        } else {
-                            gmarkers[i].setMap(map);
-                            return;
-                        }
-                    }
-                }
-
-            });
-
-        </script>
-    </section>
-}*@
-
-<br>
-<br>
-
-@*@if (!Model.Any())
-{
-    <p>Sorry, no connection to Server</p>
-}
-else
-{
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Choose</th>
-                <th>Address</th>
-                <th>Object name</th>
-                <th>Speed</th>
-                <th>Last Update</th>
-                <th>Last activity</th>
-            </tr>
-
-        </thead>
-        <tbody id="cool">
-            @foreach (var vehicle in Model)
-            {
-                <tr>
-                    <td>
-                    <input type="checkbox" id="@vehicle.objectName" checked></td>
-                    <td>@vehicle.address</td>
-                    <td>@vehicle.objectName</td>
-                    <td>@vehicle.speed</td>
-                    <td>@vehicle.timestamp</td>
-                    <td>@vehicle.timeDifference</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}*@
 
 
 

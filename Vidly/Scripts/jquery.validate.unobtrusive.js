@@ -297,7 +297,7 @@ adapters.addSingleVal("extension", "extension");
 adapters.addSingleVal("extension", "extension", "accept");
 }
 adapters.addSingleVal("regex", "pattern");
-adapters.addBool("creditcard").addBool("date").addBool("digits").addBool("email").addBool("number").addBool("url");
+adapters.addBool("creditcard").addBool("date").addBool("digits").addBool("email").addBool("number").addBool("Url");
 adapters.addMinMax("length", "minlength", "maxlength", "rangelength").addMinMax("range", "min", "max", "range");
 adapters.add("equalto", ["other"], function (options) {
 var prefix = getModelPrefix(options.element.name),
@@ -312,7 +312,7 @@ if (options.element.tagName.toUpperCase() !== "INPUT" || options.element.type.to
 setValidationValues(options, "required", true);
 }
 });
-adapters.add("remote", ["url", "type", "additionalfields"], function (options) {
+adapters.add("remote", ["Url", "type", "additionalfields"], function (options) {
 var value = {
 url: options.params.url,
 type: options.params.type || "GET",

@@ -4636,7 +4636,7 @@ if ( !getSetAttribute ) {
 // Some attributes require a special call on IE
 // http://msdn.microsoft.com/en-us/library/ms536429%28VS.85%29.aspx
 if ( !jQuery.support.hrefNormalized ) {
-	// href/src property should get the full normalized URL (#10299/#12915)
+	// href/src property should get the full normalized Url (#10299/#12915)
 	jQuery.each([ "href", "src" ], function( i, name ) {
 		jQuery.propHooks[ name ] = {
 			get: function( elem ) {
@@ -4651,7 +4651,7 @@ if ( !jQuery.support.style ) {
 		get: function( elem ) {
 			// Return undefined in the case of empty string
 			// Note: IE uppercases css property names, but if we were to .toLowerCase()
-			// .cssText, that would destroy case senstitivity in URL's, like in "background"
+			// .cssText, that would destroy case senstitivity in Url's, like in "background"
 			return elem.style.cssText || undefined;
 		},
 		set: function( elem, value ) {
@@ -7887,7 +7887,7 @@ jQuery.extend({
 	// Main method
 	ajax: function( url, options ) {
 
-		// If url is an object, simulate pre-1.5 signature
+		// If Url is an object, simulate pre-1.5 signature
 		if ( typeof url === "object" ) {
 			options = url;
 			url = undefined;
@@ -7900,7 +7900,7 @@ jQuery.extend({
 			parts,
 			// Loop variable
 			i,
-			// URL without anti-cache param
+			// Url without anti-cache param
 			cacheURL,
 			// Response headers as string
 			responseHeadersString,
@@ -8010,8 +8010,8 @@ jQuery.extend({
 
 		// Remove hash character (#7531: and string promotion)
 		// Add protocol if not provided (#5866: IE7 issue with protocol-less urls)
-		// Handle falsy url in the settings object (#10093: consistency with old signature)
-		// We also use the url parameter if available
+		// Handle falsy Url in the settings object (#10093: consistency with old signature)
+		// We also use the Url parameter if available
 		s.url = ( ( url || s.url || ajaxLocation ) + "" ).replace( rhash, "" ).replace( rprotocol, ajaxLocParts[ 1 ] + "//" );
 
 		// Alias method option to type as per ticket #12004
@@ -8057,21 +8057,21 @@ jQuery.extend({
 		// Determine if request has content
 		s.hasContent = !rnoContent.test( s.type );
 
-		// Save the URL in case we're toying with the If-Modified-Since
+		// Save the Url in case we're toying with the If-Modified-Since
 		// and/or If-None-Match header later on
 		cacheURL = s.url;
 
 		// More options handling for requests with no content
 		if ( !s.hasContent ) {
 
-			// If data is available, append data to url
+			// If data is available, append data to Url
 			if ( s.data ) {
 				cacheURL = ( s.url += ( ajax_rquery.test( cacheURL ) ? "&" : "?" ) + s.data );
 				// #9682: remove data so that it's not used in an eventual retry
 				delete s.data;
 			}
 
-			// Add anti-cache in url if needed
+			// Add anti-cache in Url if needed
 			if ( s.cache === false ) {
 				s.url = rts.test( cacheURL ) ?
 
@@ -8556,7 +8556,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 
 	var callbackName, overwritten, responseContainer,
 		jsonProp = s.jsonp !== false && ( rjsonp.test( s.url ) ?
-			"url" :
+			"Url" :
 			typeof s.data === "string" && !( s.contentType || "" ).indexOf("application/x-www-form-urlencoded") && rjsonp.test( s.data ) && "data"
 		);
 
@@ -8568,7 +8568,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 			s.jsonpCallback() :
 			s.jsonpCallback;
 
-		// Insert callback into url or form data
+		// Insert callback into Url or form data
 		if ( jsonProp ) {
 			s[ jsonProp ] = s[ jsonProp ].replace( rjsonp, "$1" + callbackName );
 		} else if ( s.jsonp !== false ) {
@@ -9739,7 +9739,7 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 
 				if ( jQuery.isWindow( elem ) ) {
 					// As of 5/8/2012 this will yield incorrect results for Mobile Safari, but there
-					// isn't a whole lot we can do. See pull request at this URL for discussion:
+					// isn't a whole lot we can do. See pull request at this Url for discussion:
 					// https://github.com/jquery/jquery/pull/764
 					return elem.document.documentElement[ "client" + name ];
 				}

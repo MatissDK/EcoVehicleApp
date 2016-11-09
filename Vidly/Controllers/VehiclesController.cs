@@ -21,7 +21,7 @@ namespace Vidly.Controllers
         private const string Vehicle1949 = "https://apps.oskando.ee/seeme/Api/Vehicles/getRawData?objectId=1949&begTimestamp=2013-02-01&endTimestamp=2013-02-02&key=proovitoo1";
         private const string Vehicle969 = "https://apps.oskando.ee/seeme/Api/Vehicles/getRawData?objectId=969&begTimestamp=2013-02-01&endTimestamp=2013-02-02&key=proovitoo1";
 
-        //need to add objectId and date  + check if valid URL 
+        //need to add objectId and date  + check if valid Url 
 
         //public ActionResult Index()
         //{
@@ -64,10 +64,10 @@ namespace Vidly.Controllers
         //}
 
 
-        //public List<Vehicle> GetVehicles(string url)
+        //public List<Vehicle> GetVehicles(string Url)
         //{
         //    Parser mParser = new Parser();
-        //    List<Vehicle> myList = mParser.ParseRawVehicleData(url);
+        //    List<Vehicle> myList = mParser.ParseRawVehicleData(Url);
         //    return myList;
         //}
     }
