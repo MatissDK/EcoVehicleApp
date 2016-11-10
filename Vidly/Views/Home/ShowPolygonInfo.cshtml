@@ -69,17 +69,20 @@
 				}
 
 				uniqueObejctId = arrNoDupe(idKeys);
-				
-				$.each(data, function(i, item) {
-					if (item.ObjectId === 969) {
-						vehicle1041.push({ lat: item.latitude, lng: item.longitude });
-					} else if (item.ObjectId === 1949) {
-						vehicle1949.push({ lat: item.latitude, lng: item.longitude });
-					} else if (item.ObjectId === 1041) {
-						vehicle969.push({ lat: item.latitude, lng: item.longitude });
-					}
+			    console.log(uniqueObejctId);
 
-				});
+
+			    $.each(data, function (i, item) {
+			        if (item.ObjectId == uniqueObejctId[0]) {
+			            vehicle1041.push({ lat: item.latitude, lng: item.longitude });
+			        } else if (item.ObjectId == uniqueObejctId[1]) {
+			            vehicle1949.push({ lat: item.latitude, lng: item.longitude });
+			        } else if (item.ObjectId == uniqueObejctId[2]) {
+			            vehicle969.push({ lat: item.latitude, lng: item.longitude });
+			        }
+
+			    });
+
 
 				var est1 = createPolygonObject(vehicle1041, '#ffff00');
 				var est2 = createPolygonObject(vehicle1949, '#b30000');
@@ -88,7 +91,6 @@
 				putPoligonOnMapAndListener(est1);
 				putPoligonOnMapAndListener(est2);
 				putPoligonOnMapAndListener(est3);
-
 
 				areas.push(google.maps.geometry.spherical.computeArea(est1.getPath()) * 0.001);
 				areas.push(google.maps.geometry.spherical.computeArea(est2.getPath()) * 0.001);

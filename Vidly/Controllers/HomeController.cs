@@ -5,7 +5,6 @@ using System.Web.Mvc;
 using Vidly.Models;
 
 
-
 namespace Vidly.Controllers
 {
 
@@ -49,11 +48,8 @@ namespace Vidly.Controllers
         }
 
 
-        //need to provide date from user input 
-        //[HttpPost]
         public ActionResult ShowPolygonInfo(string date)
         {
-            //date = "02/01/2013";
             try
             {
                 GetVehiclesRawData(date);
@@ -85,12 +81,7 @@ namespace Vidly.Controllers
             return View();
         }
 
-
-        /// <summary>
-        ///  ////////////////////////
-        /// </summary>
-       
-
+      
         //makes connection to getLatestData API
         public void GetVehicles(string url)
         {

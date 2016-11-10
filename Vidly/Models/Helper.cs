@@ -35,7 +35,7 @@ namespace Vidly.Utils
 
         }
 
-
+        //creates valid URL to get raw data for provided vehicles and date
         public static string UrlCreator(string date, string objectId)
         {
             var dateFrom = DateTime.ParseExact(date, "MM/dd/yyyy", null);

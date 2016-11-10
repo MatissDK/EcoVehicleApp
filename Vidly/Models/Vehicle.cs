@@ -30,7 +30,5 @@ namespace Vidly.Models
 
         public int ObjectId { get; set; }
 
-        //test data 
-        public bool type { get; set; }
     }
 }
