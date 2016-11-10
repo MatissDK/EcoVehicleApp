@@ -24,10 +24,8 @@
 @section scripts {
 
 	<script>
-		
-		var uniqueObejctId = [];
+        
 		var map;
-
 		function initMap() {
 
 			map = new google.maps.Map(document.getElementById('map'), {
@@ -50,77 +48,75 @@
 			getJsonData();
 
 			function handleData(data) {
-
-				var vehicle1041 = [];
-				var vehicle1949 = [];
-				var vehicle969 = [];
-
-				//getting unique IdValues
 				var idKeys = [];
+
 				$.each(data, function(i, item) {
 					idKeys.push(item.ObjectId);
 				});
 
-				function arrNoDupe(a) {
-					var temp = {};
-					for (var i = 0; i < a.length; i++)
-						temp[a[i]] = true;
-					return Object.keys(temp);
-				}
+				var uniqueObjectId = filterArrayDuplicates(idKeys);
+				uniqueObjectId.forEach(function(value, index) {
+					var curArray = tempVehicleData(data, uniqueObjectId, index);
+					var curEst = createPolygonObject(curArray, randomColorGenerator());
+					putPoligonOnMapAndListener(curEst);
 
-				uniqueObejctId = arrNoDupe(idKeys);
-			  
-
-			    $.each(data, function (i, item) {
-			        if (item.ObjectId == uniqueObejctId[0]) {
-			            vehicle1041.push({ lat: item.latitude, lng: item.longitude });
-			        } else if (item.ObjectId == uniqueObejctId[1]) {
-			            vehicle1949.push({ lat: item.latitude, lng: item.longitude });
-			        } else if (item.ObjectId == uniqueObejctId[2]) {
-			            vehicle969.push({ lat: item.latitude, lng: item.longitude });
-			        }
-
-			    });
-
-
-				var est1 = createPolygonObject(vehicle1041, '#ffff00');
-				var est2 = createPolygonObject(vehicle1949, '#b30000');
-				var est3 = createPolygonObject(vehicle969, '#0066ff');
-
-				putPoligonOnMapAndListener(est1);
-				putPoligonOnMapAndListener(est2);
-				putPoligonOnMapAndListener(est3);
-
-				areas.push(google.maps.geometry.spherical.computeArea(est1.getPath()) * 0.001);
-				areas.push(google.maps.geometry.spherical.computeArea(est2.getPath()) * 0.001);
-				areas.push(google.maps.geometry.spherical.computeArea(est3.getPath()) * 0.001);
-
-				function createPolygonObject(data, color) {
-					var polygonObject = new google.maps.Polygon({
-						paths: data,
-						strokeColor: '#000000',
-						strokeOpacity: 0.8,
-						strokeWeight: 2,
-						fillColor: color,
-						fillOpacity: 0.35
-					});
-					return polygonObject;
-				}
-
-				function putPoligonOnMapAndListener(polygonObejct) {
-					polygonObejct.setMap(map);
-					google.maps.event.addListener(polygonObejct, 'click', function() {
-						alert(convertToHectars(this));
-					});
-				}
-
-				function convertToHectars(parameter) {
-					var hectaresOut = google.maps.geometry.spherical.computeArea(parameter.getPath()) * 0.001;
-					var roundedHectares = Math.round(hectaresOut);
-					return 'Area is ' + roundedHectares + ' hectares large';
-				}
-
+				});
 			}
+
+		    //returs random color for handle createPolygonObject
+			function randomColorGenerator() {
+				var letters = '0123456789ABCDEF';
+				var color = '#';
+				for (var i = 0; i < 6; i++) {
+					color += letters[Math.floor(Math.random() * 16)];
+				}
+				return color;
+			}
+
+
+			function tempVehicleData(data, uniqueObjectId, index) {
+				var curVehicle = [];
+				data.forEach(function(curValue) {
+					if (curValue.ObjectId == uniqueObjectId[index]) {
+						var coordinatesObject = { lat: curValue.latitude, lng: curValue.longitude };
+						curVehicle.push(coordinatesObject);
+					}
+				});
+				return curVehicle;
+			}
+
+			function filterArrayDuplicates(a) {
+				var temp = {};
+				for (var i = 0; i < a.length; i++)
+					temp[a[i]] = true;
+				return Object.keys(temp);
+			}
+
+			function createPolygonObject(data, color) {
+				var polygonObject = new google.maps.Polygon({
+					paths: data,
+					strokeColor: '#000000',
+					strokeOpacity: 0.8,
+					strokeWeight: 2,
+					fillColor: color,
+					fillOpacity: 0.35
+				});
+				return polygonObject;
+			}
+
+			function putPoligonOnMapAndListener(polygonObject) {
+				polygonObject.setMap(map);
+				google.maps.event.addListener(polygonObject, 'click', function() {
+					alert(convertToHectars(this));
+				});
+			}
+
+			function convertToHectars(parameter) {
+				var hectaresOut = google.maps.geometry.spherical.computeArea(parameter.getPath()) * 0.001;
+				var roundedHectares = Math.round(hectaresOut);
+				return 'Area is ' + roundedHectares + ' hectares large';
+			}
+
 
 		}
 
