@@ -27,16 +27,26 @@ namespace Vidly.Controllers
         [HttpPost]
         public ActionResult GetInfo(string url)
         {
-            try
-            {
-                GetVehicles(url);
-            }
-            catch (Exception exception)
-            {
 
-                return RedirectToAction("ArgumentError","Home");
+            if (url != "proovitoo1")
+            {
+                return RedirectToAction("ArgumentError", "Home");
             }
-            
+            else
+            {
+                url = "https://apps.oskando.ee/seeme/Api/Vehicles/getLastData?key=proovitoo1";
+
+                try
+                {
+                    GetVehicles(url);
+                }
+                catch (Exception exception)
+                {
+
+                    return RedirectToAction("ArgumentError", "Home");
+                }
+            }
+
             return View(_myListOfLastData);
         }
 
